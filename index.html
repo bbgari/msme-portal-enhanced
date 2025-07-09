@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MSME Portal Enhanced</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+    header, footer { background-color: #8B0000; color: #fff; text-align: center; padding: 1em; }
+    nav { background: #333; text-align: center; padding: 0.5em; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; }
+    .container { padding: 20px; }
+    .card { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .hidden { display: none; }
+    input, textarea, select { width: 100%; padding: 0.7em; margin-top: 10px; }
+    button { background: #8B0000; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #A52A2A; }
+    .dashboard { display: flex; gap: 20px; flex-wrap: wrap; }
+    .dashboard-card { flex: 1; min-width: 200px; background: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PNG MSME Portal</h1>
+    <p>Empowering MSMEs through Digital Services</p>
+  </header>
+  <nav>
+    <a href="#" onclick="showSection('login')">Login</a>
+    <a href="#" onclick="showSection('register')">Register MSME</a>
+    <a href="#" onclick="showSection('tax')">Apply for Tax</a>
+    <a href="#" onclick="showSection('message')">Contact SME Corp</a>
+    <a href="#" onclick="showSection('market')">Marketplace</a>
+    <a href="#" onclick="showSection('admin')">Admin Dashboard</a>
+    <a href="https://www.ipa.gov.pg/" target="_blank">IPA Portal</a>
+    <a href="https://irc.gov.pg/" target="_blank">IRC Portal</a>
+  </nav>
+
+  <div class="container">
+    <div id="login" class="card">
+      <h3>Login</h3>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+    </div>
+
+    <div id="register" class="card hidden">
+      <h3>Business Registration</h3>
+      <input type="text" id="bizName" placeholder="Business Name">
+      <input type="text" id="owner" placeholder="Owner Name">
+      <input type="email" id="email" placeholder="Email">
+      <button onclick="saveRegistration()">Submit</button>
+    </div>
+
+    <div id="tax" class="card hidden">
+      <h3>Apply for Tax Certificate</h3>
+      <input type="text" placeholder="TIN Number">
+      <input type="text" placeholder="Contact Name">
+      <button onclick="alert('Application submitted!')">Submit</button>
+    </div>
+
+    <div id="message" class="card hidden">
+      <h3>Send Message</h3>
+      <textarea id="messageBox" placeholder="Write your message..."></textarea>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div id="market" class="card hidden">
+      <h3>Upload Product</h3>
+      <input type="text" id="prodName" placeholder="Product Name">
+      <input type="text" id="prodPrice" placeholder="Price">
+      <button onclick="uploadProduct()">Upload</button>
+      <div id="productList"></div>
+    </div>
+
+    <div id="admin" class="card hidden">
+      <h3>Admin Dashboard</h3>
+      <div class="dashboard">
+        <div class="dashboard-card" id="totalBiz">Registered MSMEs: 0</div>
+        <div class="dashboard-card" id="totalMsgs">Messages: 0</div>
+        <div class="dashboard-card" id="totalProd">Products: 0</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 SME Corporation | GarIT Solutions</p>
+  </footer>
+
+  <script>
+    let regCount = 0, msgCount = 0, prodCount = 0;
+    function showSection(id) {
+      document.querySelectorAll('.card').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function login() {
+      const user = document.getElementById('username').value;
+      if (user) alert('Welcome ' + user);
+    }
+
+    function saveRegistration() {
+      regCount++;
+      document.getElementById('totalBiz').innerText = 'Registered MSMEs: ' + regCount;
+      alert('Registration Submitted!');
+    }
+
+    function sendMessage() {
+      msgCount++;
+      document.getElementById('totalMsgs').innerText = 'Messages: ' + msgCount;
+      alert('Message sent!');
+    }
+
+    function uploadProduct() {
+      const name = document.getElementById('prodName').value;
+      const price = document.getElementById('prodPrice').value;
+      if (!name || !price) return alert('Fill all fields');
+      prodCount++;
+      document.getElementById('totalProd').innerText = 'Products: ' + prodCount;
+      const list = document.getElementById('productList');
+      const item = document.createElement('div');
+      item.innerText = `${name} - K${price}`;
+      list.appendChild(item);
+    }
+  </script>
+</body>
+</html>
